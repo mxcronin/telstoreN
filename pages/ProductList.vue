@@ -36,7 +36,7 @@ export default {
       'https://wsu.epdemos.com/cortex/navigations/telmore?zoom=element'
     )
     const prices = await $axios.$get(
-      ' offers/telmore/qgqvbj3tgiyha3dvom=?zoom=definition,pricerange'
+      'https://wsu.epdemos.com/cortex/offers/telmore/qgqvbj3tgiyha3dvom=?zoom=definition,pricerange'
     )
     return { categoryDetails, np, prices }
   },
@@ -51,9 +51,9 @@ export default {
     }
   },
   computed: {
-    productdetails() {
-      return this.np || {}
-    },
+    // productdetails() {
+    //   return this.np || {}
+    // },
   },
 }
 </script>
