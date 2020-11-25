@@ -5,7 +5,7 @@
         <span class="logo"><img src="../assets/img/logo.png" alt="" /></span>
       </li>
       <li>
-        <NuxtLink to="/productDetails">Product Details placeholder</NuxtLink>
+        <NuxtLink to="/productdetails">Product Details placeholder</NuxtLink>
       </li>
       <li><NuxtLink to="/home">Home</NuxtLink></li>
       <li><NuxtLink to="/productlist">Product</NuxtLink></li>
