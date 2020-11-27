@@ -1,59 +1,77 @@
+<script src="../components/productList.js"></script>
+
 <template>
   <div>
     <!-- {<h1>{{ msg }}</h1>} -->
     <p>PRODUCTS</p>
-    <h1>Phones</h1>
-    {{ categoryDetails }}
+    <h1>{{ categoriesName }}</h1>
+    {{ productPrices }}
+    <!-- {{ categoryDetails }} -->
     <ul class="telstore-productlist">
       <li
-        v-for="device in deviceList"
-        :key="device.name"
+        v-for="device in categoriesOffers"
+        :key="device"
         class="telstore-list-item"
       >
         <div class="container">
-          {{ device.name }}
+          <span class="product-img"
+            ><img src="../assets/img/apple-iphone-12-64gb-bla.jpg" alt=""
+          /></span>
+          {{ device }}
         </div>
       </li>
     </ul>
-    <!-- <ul>
-      <li v-for="item in np" :key="item">
-        <div>
-          {{ item }}
-        </div>
-      </li>
-    </ul> -->
+    <span v-for="device in productPrices" :key="device">
+      Price: {{ device }}
+    </span>
   </div>
 </template>
 
 <script>
 export default {
   name: 'ProductList',
+
   async asyncData({ $axios }) {
-    const categoryDetails = await $axios.$get(
+    const cats = await $axios.$get(
       'https://wsu.epdemos.com/cortex/navigations/telmore/mrsxm2ldmvzq=?zoom=offers:element:definition,offers:element:pricerange'
-    )
-    const np = await $axios.$get(
-      'https://wsu.epdemos.com/cortex/navigations/telmore?zoom=element'
     )
     const prices = await $axios.$get(
       'https://wsu.epdemos.com/cortex/offers/telmore/qgqvbj3tgiyha3dvom=?zoom=definition,pricerange'
     )
-    return { categoryDetails, np, prices }
+    return { cats, prices }
   },
-  data($) {
+  data() {
     return {
-      deviceList: [
-        { name: 'iPhone 11' },
-        { name: 'iPhone 12' },
-        { name: 'iPhone 11 pro' },
-        { name: 'iPhone 12 pro' },
-      ],
+      prices: [],
+      cats: [],
     }
   },
   computed: {
-    // productdetails() {
-    //   return this.np || {}
-    // },
+    productPrices() {
+      // if (this.prices !== undefined)
+      //   return this.prices._pricerange[0]['list-price-range']['from-price'][0]
+      //     .display
+      let prices = []
+      if (this.cats !== undefined) {
+        const el = this.cats['_offers'][0]['_element']
+        prices = el.map(
+          (item) =>
+            item['_pricerange'][0]['list-price-range']['from-price'][0].amount
+        )
+      }
+      return prices
+    },
+    categoriesName() {
+      if (this.cats !== undefined) return this.cats['name']
+    },
+    categoriesOffers() {
+      let def = []
+      if (this.cats !== undefined) {
+        const el = this.cats['_offers'][0]['_element']
+        def = el.map((item) => item['_definition'][0]['details'][0])
+      }
+      return def
+    },
   },
 }
 </script>
@@ -65,10 +83,15 @@ export default {
 .telstore-list-item {
   float: right;
   margin: 30px;
+  height: 200px;
 }
 .container {
   border: 1px solid #ccc;
   height: 200px;
   width: 200px;
+}
+
+.product-img img {
+  width: 100px;
 }
 </style>
