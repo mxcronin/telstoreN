@@ -3,9 +3,7 @@
 <template>
   <div>
     <!-- {<h1>{{ msg }}</h1>} -->
-    <p>PRODUCTS</p>
     <h1>{{ categoriesName }}</h1>
-    {{ productPrices }}
     <!-- {{ categoryDetails }} -->
     <ul class="telstore-productlist">
       <li
@@ -64,6 +62,9 @@ export default {
     categoriesName() {
       if (this.cats !== undefined) return this.cats['name']
     },
+    categoriesList() {
+      if (this.cats !== undefined) return this.cats['name']
+    },
     categoriesOffers() {
       let def = []
       if (this.cats !== undefined) {
@@ -87,7 +88,7 @@ export default {
 }
 .container {
   border: 1px solid #ccc;
-  height: 200px;
+  height: 300px;
   width: 200px;
 }
 
