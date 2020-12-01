@@ -1,5 +1,3 @@
-<script src="../components/productList.js"></script>
-
 <template>
   <div>
     <!-- {<h1>{{ msg }}</h1>} -->
@@ -26,6 +24,31 @@
 </template>
 
 <script>
+const zoom = [
+  'navigations:element',
+  'navigations:element:child',
+  'navigations:element:child:child',
+  'navigations:element:child:child:child',
+  'navigations:element:child:child:child:child',
+]
+
+const Config = {
+  cortexApi: {
+    path: 'https://wsu.epdemos.com/cortex',
+    scope: 'telmore',
+    pathForProxy: '',
+    reqTimeout: '30000',
+  },
+}
+
+function parseCategory(e) {
+  return {
+    name: e.name,
+    displayName: e['display-name'],
+    children: e._child?.map?.((c) => parseCategory(c)) || [],
+  }
+}
+
 export default {
   name: 'ProductList',
 
@@ -33,10 +56,13 @@ export default {
     const cats = await $axios.$get(
       'https://wsu.epdemos.com/cortex/navigations/telmore/mrsxm2ldmvzq=?zoom=offers:element:definition,offers:element:pricerange'
     )
+    const catsnew = await $axios.$get(
+      `${Config.cortexApi.path}/?zoom=${zoom.join(',')}`
+    )
     const prices = await $axios.$get(
       'https://wsu.epdemos.com/cortex/offers/telmore/qgqvbj3tgiyha3dvom=?zoom=definition,pricerange'
     )
-    return { cats, prices }
+    return { cats, prices, catsnew }
   },
   data() {
     return {
@@ -63,7 +89,11 @@ export default {
       if (this.cats !== undefined) return this.cats['name']
     },
     categoriesList() {
-      if (this.cats !== undefined) return this.cats['name']
+      if (this.catsnew !== undefined)
+        return (
+          this.catsnew._navigations[0]._element.map((e) => parseCategory(e)) ||
+          []
+        )
     },
     categoriesOffers() {
       let def = []

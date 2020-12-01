@@ -1,19 +1,20 @@
 <template>
   <div class="container">
+    <li><NuxtLink to="/headernav">Header</NuxtLink></li>
     <Home />
   </div>
 </template>
 
 //
 <script>
-// import Home from './Home.vue'
-// export default {
-//   name: 'App',
-//   components: {
-//     Home,
-//   },
-// }
-//
+import Home from './Home.vue'
+
+export default {
+  name: 'App',
+  components: {
+    Home,
+  },
+}
 </script>
 
 <style>
