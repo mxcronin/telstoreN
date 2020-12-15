@@ -14,7 +14,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['./plugins/axios'],
+  plugins: [],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -32,23 +32,31 @@ export default {
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
+    //'@nuxtjs/axios',
+    '@nuxtjs/apollo',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
   ],
 
-  // Axios module configuration (https://go.nuxtjs.dev/config-axios)
+  // Axios module configuration (https://go.nuxtjs.de)v/config-axios
   axios: {
-    requestInterceptor: (config, { store }) => {
-      config.headers.common['access-token'] =
-        '786b913e-cdfe-47e0-8be8-78ae078858ce'
-      store.state.user.headers.access_token
-      return config
+    credentials: true,
+    //baseURL: 'https://wsu.epdemos.com/cortex',
+    // requestInterceptor: (config, { store }) => {
+    //   config.headers.common['Bearer'] = '292616c2-d352-4f41-b005-0b538aea1152'
+    //   store.state.user.headers.access_token
+    //   return config
+    // },
+  },
+  apollo: {
+    clientConfigs: {
+      default: {
+        httpEndpoint: 'http://localhost:4000',
+      },
     },
   },
-
   // Content module configuration (https://go.nuxtjs.dev/config-content)
   content: {},
 

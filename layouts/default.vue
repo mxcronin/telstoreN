@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <HeaderNav />
+      <!-- <HeaderNav /> -->
     </div>
     <div class="content-container">
       <Nuxt />
@@ -9,11 +9,11 @@
   </div>
 </template>
 <script>
-import HeaderNav from '../pages/HeaderNav.vue'
+// import HeaderNav from '../pages/HeaderNav.vue'
 
 export default {
   components: {
-    HeaderNav,
+    // HeaderNav,
   },
 }
 </script>
